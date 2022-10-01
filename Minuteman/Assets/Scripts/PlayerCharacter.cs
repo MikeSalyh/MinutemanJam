@@ -13,12 +13,18 @@ public class PlayerCharacter : MonoBehaviour
     private Vector2 _dodgeVector = new Vector2();
     private Rigidbody2D rb;
 
-    public GameObject bulletPrefab, bulletParent;
+    public float recoilForce = 1000f;
+
+    public GameObject bulletPrefab;
+    private GameObject bulletParent;
+    public float recoilShakeDuration = 0.5f, recoilShakePower = 800f;
+    public int recoilShakeVibrato = 5;
 
     // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
 
     // Update is called once per frame
@@ -32,11 +38,20 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Boom!");
-            Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
-            b.transform.position = this.transform.position;
-            b.Shoot((Reticle.Instance.transform.position - transform.position).normalized);
+            //Shoot the musket!
+            ShootMusket();
         }
+    }
+
+    private void ShootMusket()
+    {
+        Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
+        b.transform.position = this.transform.position;
+        Vector3 shotDirection = (Reticle.Instance.transform.position - transform.position).normalized;
+        b.Shoot(shotDirection);
+
+        rb.AddForce(-shotDirection * recoilForce);
+        CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
     }
 
     private void FixedUpdate()
