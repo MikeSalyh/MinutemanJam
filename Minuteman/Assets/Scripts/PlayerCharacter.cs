@@ -20,6 +20,17 @@ public class PlayerCharacter : MonoBehaviour
     public float recoilShakeDuration = 0.5f, recoilShakePower = 800f;
     public int recoilShakeVibrato = 5;
 
+
+    public float reloadCooldownTime = 10f;
+    private float reloadCooldownRemaining = 0f;
+
+    public bool CanShoot => reloadCooldownRemaining <= 0f;
+
+    public float ReloadTimeNormalized => reloadCooldownRemaining / reloadCooldownTime;
+
+    public delegate void Musketevent();
+    public Musketevent OnFire, OnReloadComplete;
+
     public GameObject smokePrefab;
 
     // Start is called before the first frame update
@@ -38,7 +49,17 @@ public class PlayerCharacter : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(reloadCooldownRemaining > 0f)
+        {
+            reloadCooldownRemaining -= Time.deltaTime;
+            if(reloadCooldownRemaining <= 0f)
+            {
+                if(OnReloadComplete != null)
+                    OnReloadComplete.Invoke();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && CanShoot)
         {
             //Shoot the musket!
             ShootMusket();
@@ -55,6 +76,13 @@ public class PlayerCharacter : MonoBehaviour
         rb.AddForce(-shotDirection * recoilForce);
         CameraFollower.Instance.HandleRecoil(-shotDirection);
         CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
+
+        reloadCooldownRemaining = reloadCooldownTime;
+
+        if(OnFire != null)
+        {
+            OnFire.Invoke();
+        }
     }
 
     private void FixedUpdate()
