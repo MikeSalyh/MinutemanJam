@@ -66,7 +66,7 @@ public class PlayerCharacter : MonoBehaviour
         rb.AddForce(_inputVector * inputForce);
 
         //Dodging
-        if (Input.GetMouseButton(1) && _inputVector.magnitude >= 1f)
+        if (Input.GetMouseButton(1) && _inputVector.magnitude >= 0.1f)
         {
             if (Time.time > lastDodgeTime + dodgeCooldown)
             {
