@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rb;
 
     public GameObject smokePrefab, impactPrefab;
+    public GameObject trail;
 
 
     private void Awake()
@@ -31,6 +32,8 @@ public class Bullet : MonoBehaviour
         GameObject spark = GameObject.Instantiate(impactPrefab, ParticleParent.Instance.transform.parent);
         spark.transform.position = this.transform.position;
         Destroy(spark, 1f);
+        trail.transform.parent = this.transform.parent;
+        Destroy(trail, 1f);
         Destroy(this.gameObject);
     }
 }
