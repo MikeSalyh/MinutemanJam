@@ -11,7 +11,9 @@ public class PlayerCharacter : MonoBehaviour
     private float lastDodgeTime = 0f;
     private Vector2 _inputVector = new Vector2();
     private Vector2 _dodgeVector = new Vector2();
-    private Rigidbody2D rb;
+    private Rigidbody rb;
+    private Rigidbody2D rb2;
+    private bool is2D = false;
 
     public float recoilForce = 1000f;
 
@@ -36,7 +38,9 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
+        rb2 = GetComponent<Rigidbody2D>();
+        if (rb2 != null) is2D = true;
         bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
 
@@ -73,7 +77,14 @@ public class PlayerCharacter : MonoBehaviour
         Vector3 shotDirection = (Reticle.Instance.transform.position - transform.position).normalized;
         b.Shoot(shotDirection);
 
-        rb.AddForce(-shotDirection * recoilForce);
+        if (is2D)
+        {
+            rb2.AddForce(-shotDirection * recoilForce);
+        }
+        else
+        {
+            rb.AddForce(-shotDirection * recoilForce);
+        }
         CameraFollower.Instance.HandleRecoil(-shotDirection);
         CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
 
@@ -123,7 +134,14 @@ public class PlayerCharacter : MonoBehaviour
 
     private void HandleMovementPhysics()
     {
-        rb.AddForce(_inputVector * inputForce);
+        if (is2D)
+        {
+            rb2.AddForce(_inputVector * inputForce);
+        }
+        else
+        {
+            rb.AddForce(_inputVector * inputForce);
+        }
 
         //Dodging
         if (Input.GetMouseButton(1) && _inputVector.magnitude >= 0.1f)
@@ -132,7 +150,15 @@ public class PlayerCharacter : MonoBehaviour
             {
                 lastDodgeTime = Time.time;
                 _dodgeVector = _inputVector * dodgeAcceleration;
-                rb.AddForce(_dodgeVector, ForceMode2D.Impulse);
+
+                if (is2D)
+                {
+                    rb2.AddForce(_dodgeVector, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rb.AddForce(_dodgeVector, ForceMode.Impulse);
+                }
 
                 GameObject smoke = GameObject.Instantiate(smokePrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
                 smoke.transform.position = this.transform.position;
