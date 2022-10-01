@@ -13,6 +13,8 @@ public class PlayerCharacter : MonoBehaviour
     private Vector2 _dodgeVector = new Vector2();
     private Rigidbody2D rb;
 
+    public GameObject bulletPrefab, bulletParent;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,6 +25,18 @@ public class PlayerCharacter : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
+        HandleShooting();
+    }
+
+    private void HandleShooting()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Boom!");
+            Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
+            b.transform.position = this.transform.position;
+            b.Shoot((Reticle.Instance.transform.position - transform.position).normalized);
+        }
     }
 
     private void FixedUpdate()

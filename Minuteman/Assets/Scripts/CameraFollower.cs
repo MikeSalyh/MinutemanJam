@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    public GameObject focus;
+    public GameObject focus, reticle;
     //public float ZDepth = 400f;
     public float followTightness = 0.75f;
     public float maxSpeed = 100f;
@@ -19,6 +19,7 @@ public class CameraFollower : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, focus.transform.position -Vector3.forward, ref velocity, followTightness, maxSpeed);
+        Vector3 targetPos = Vector3.Lerp(focus.transform.position, reticle.transform.position, 0.1f);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos - Vector3.forward, ref velocity, followTightness, maxSpeed);
     }
 }
