@@ -18,6 +18,8 @@ public class Reticle : MonoBehaviour
     private bool _isLoaded = true;
     public GameObject loadedGraphics, emptyGraphics;
 
+    public bool is2D = true;
+
     private void Start()
     {
         Instance = this;
@@ -43,7 +45,13 @@ public class Reticle : MonoBehaviour
 
     private void UpdatePosition()
     {
+        if (is2D)
+        {
         transform.position = Input.mousePosition + cameraTarget.transform.position + center;
+        } else
+        {
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Camera.main.gameObject.transform.position.z * Vector3.forward);
+        }
     }
 
     private void DrawLine()

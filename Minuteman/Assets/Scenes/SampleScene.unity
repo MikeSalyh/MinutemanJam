@@ -3043,5 +3043,9 @@ PrefabInstance:
       propertyPath: smokePrefab
       value: 
       objectReference: {fileID: 7397985031446310531, guid: 9b2c957056e43d145a6d111b4339998a, type: 3}
+    - target: {fileID: 2200009479789221701, guid: 7615e332ee3cf084dbeeb8ed5ec44d35, type: 3}
+      propertyPath: reloadCooldownTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7615e332ee3cf084dbeeb8ed5ec44d35, type: 3}

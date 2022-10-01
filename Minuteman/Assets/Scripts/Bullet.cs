@@ -5,35 +5,62 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float blastVelocity = 25f;
-    private Rigidbody2D rb;
+    private Rigidbody2D rb2;
+    private Rigidbody rb;
+    private bool is2D = false;
 
     public GameObject smokePrefab, impactPrefab;
-    public GameObject trail;
+    public GameObject trailPrefab;
+    private GameObject trailInstantiated;
 
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
+        rb2 = GetComponent<Rigidbody2D>();
+        is2D = rb2 != null;
     }
 
     public void Shoot(Vector2 direction)
     {
+        trailInstantiated = GameObject.Instantiate(trailPrefab, this.transform);
         GameObject smoke = GameObject.Instantiate(smokePrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         smoke.transform.position = this.transform.position;
         smoke.transform.LookAt(transform.position + (Vector3)direction, Vector2.up);
         Destroy(smoke, 1f);
 
-        rb.AddForce(direction * blastVelocity);
+        if (is2D)
+        {
+            rb2.AddForce(direction * blastVelocity);
+        } else
+        {
+            rb.AddForce(direction * blastVelocity);
+        }
+
         Destroy(this.gameObject, 1f); //after 1 second, the bullet self destructs.
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        HandleImpact();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        HandleImpact();
+    }
+
+    private void HandleImpact()
+    {
         GameObject spark = GameObject.Instantiate(impactPrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         spark.transform.position = this.transform.position;
         Destroy(spark, 1f);
-        trail.transform.parent = this.transform.parent;
-        Destroy(trail, 1f);
+
+        if (trailInstantiated != null)
+        {
+            trailInstantiated.transform.parent = this.transform.parent;
+            Destroy(trailInstantiated, 1f);
+        }
         Destroy(this.gameObject);
     }
 }
