@@ -7,8 +7,7 @@ public class AimWithMouse : MonoBehaviour
 {
     public const int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
     public CameraFollower cameraTarget;
-
-    //public LineRenderer lineRenderer;
+    public GameObject character;
     public Vector3 center = new Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
 
     // Update is called once per frame
@@ -22,20 +21,4 @@ public class AimWithMouse : MonoBehaviour
     {
         transform.position = Input.mousePosition + cameraTarget.transform.position + center;
     }
-
-    //private void LateUpdate()
-    //{
-    //    //DrawLine();
-    //}
-
-    //void DrawLine()
-    //{
-    //    List<Vector3> pos = new List<Vector3>();
-    //    pos.Add(character.transform.position);
-    //    pos.Add(transform.position);
-    //    lineRenderer.startWidth = 1f;
-    //    lineRenderer.endWidth = 1f;
-    //    lineRenderer.SetPositions(pos.ToArray());
-    //    lineRenderer.useWorldSpace = true;
-    //}
 }
