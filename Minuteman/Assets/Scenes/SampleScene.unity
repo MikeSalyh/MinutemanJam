@@ -490,9 +490,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41231f4b557bc13409a2314b24692ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 500
-  acceleration: 15
-  speedFalloff: 1.1
+  maxSpeed: 12
+  acceleration: 3
+  speedFriction: 1.5
+  dodgeCooldown: 1
+  dodgeAcceleration: 75
 --- !u!114 &1257352669
 MonoBehaviour:
   m_ObjectHideFlags: 0
