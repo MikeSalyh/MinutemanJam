@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class CameraFollower : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CameraFollower : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     public float cursorEffect = 0.35f;
     public float distance = 1f;
+    private Vector3 recoilOffset;
+    public float recoilPower = 100f, recoilDampen = 1.25f;
 
     public Transform shakingTransform;
 
@@ -23,8 +26,13 @@ public class CameraFollower : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 targetPos = Vector3.Lerp(focus.transform.position, reticle.transform.position, cursorEffect);
+        Vector3 targetPos = Vector3.Lerp(focus.transform.position + recoilOffset, reticle.transform.position, cursorEffect);
         transform.position = Vector3.SmoothDamp(transform.position, targetPos - Vector3.forward * distance, ref velocity, followTightness, maxSpeed);
+
+        if(recoilOffset.magnitude > 0.1f)
+        {
+            recoilOffset /= recoilDampen;
+        }
     }
 
 
@@ -32,5 +40,10 @@ public class CameraFollower : MonoBehaviour
     {
         Debug.Log("Shaking!");
         shakingTransform.transform.DOShakePosition(duration, power, vibrato);
+    }
+
+    internal void HandleRecoil(Vector3 direction)
+    {
+        recoilOffset = direction * recoilPower;
     }
 }

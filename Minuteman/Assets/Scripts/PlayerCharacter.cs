@@ -20,6 +20,8 @@ public class PlayerCharacter : MonoBehaviour
     public float recoilShakeDuration = 0.5f, recoilShakePower = 800f;
     public int recoilShakeVibrato = 5;
 
+    public GameObject smokePrefab;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,6 +53,7 @@ public class PlayerCharacter : MonoBehaviour
         b.Shoot(shotDirection);
 
         rb.AddForce(-shotDirection * recoilForce);
+        CameraFollower.Instance.HandleRecoil(-shotDirection);
         CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
     }
 
@@ -101,8 +104,12 @@ public class PlayerCharacter : MonoBehaviour
             {
                 lastDodgeTime = Time.time;
                 _dodgeVector = _inputVector * dodgeAcceleration;
-                Debug.Log("Dodging!");
                 rb.AddForce(_dodgeVector, ForceMode2D.Impulse);
+
+                GameObject smoke = GameObject.Instantiate(smokePrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
+                smoke.transform.position = this.transform.position;
+                smoke.transform.LookAt(transform.position - (Vector3)_dodgeVector, Vector2.up);
+                Destroy(smoke, 1f);
             }
         }
     }
