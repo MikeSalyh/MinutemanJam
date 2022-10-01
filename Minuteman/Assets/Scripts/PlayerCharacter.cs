@@ -30,6 +30,8 @@ public class PlayerCharacter : MonoBehaviour
         HandleMovementPhysics();
     }
 
+    public bool IsDodging => Time.time < lastDodgeTime + dodgeCooldown;
+
     private void HandleMovementInput()
     {
         //Move, accelerate + decelerate the character
