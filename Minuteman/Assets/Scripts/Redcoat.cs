@@ -27,6 +27,8 @@ public class Redcoat : MonoBehaviour
     private float targetingDistance = 1f;
     private bool isCommando = false;
 
+    public GameObject deathParticles;
+
 
     private void Awake()
     {
@@ -38,10 +40,25 @@ public class Redcoat : MonoBehaviour
     IEnumerator Start()
     {
         bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
-        PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
         yield return new WaitForSeconds(3f);
         TakeFiringPosition();
         initialized = true;
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DoDelayedInit());
+    }
+
+    private IEnumerator DoDelayedInit()
+    {
+        yield return new WaitForEndOfFrame();
+        PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
+    }
+
+    private void OnDisable()
+    {
+        PlayerCharacter.Instance.OnAssessDanger -= HandleDanger;
     }
 
     // Update is called once per frame
@@ -50,7 +67,7 @@ public class Redcoat : MonoBehaviour
 
         if (initialized)
         {
-            if (agent.remainingDistance < targetingDistance && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible)
+            if (agent.remainingDistance < targetingDistance && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible && PlayerCharacter.Instance.alive)
             {
                 StartCoroutine(FireAtPlayerCoroutine());
             }
@@ -83,7 +100,6 @@ public class Redcoat : MonoBehaviour
         midFiringAtPlayer = true;
         agent.isStopped = true;
         yield return new WaitForSeconds(UnityEngine.Random.value + 0.25f);
-        Debug.Log("Firing!");
         ShootMusket();
         yield return postShotDisorientation;
         midFiringAtPlayer = false;
@@ -111,7 +127,7 @@ public class Redcoat : MonoBehaviour
     public void TakeCover()
     {
         TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, true);
-        if (output != null)
+        if (output != null && gameObject.activeSelf)
             agent.SetDestination(output.transform.position);
 
         agent.isStopped = false;
@@ -157,5 +173,14 @@ public class Redcoat : MonoBehaviour
                 //If the agent gets a shot, it's good!
             }
         }
+    }
+
+    public void Die()
+    {
+        StopAllCoroutines();
+        gameObject.SetActive(false);
+        GameObject deathpart = GameObject.Instantiate(deathParticles, GameObject.FindGameObjectWithTag("ParticleParent").transform);
+        deathpart.transform.position = this.transform.position;
+        Destroy(deathpart, 1f);
     }
 }

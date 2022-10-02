@@ -196,6 +196,7 @@ MonoBehaviour:
   smokePrefab: {fileID: 7397985031446310531, guid: e00e3e89b27afb5418b8d71e5e804449, type: 3}
   recoilForce: 5000
   rend: {fileID: 3737411658548999645}
+  deathParticles: {fileID: 7397985031446310531, guid: bc99156087c250c46ae53f802355ae0f, type: 3}
 --- !u!1 &5343101939827105036
 GameObject:
   m_ObjectHideFlags: 0

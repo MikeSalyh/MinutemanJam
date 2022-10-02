@@ -26,7 +26,15 @@ public class CameraFollower : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 targetPos = Vector3.Lerp(focus.transform.position + recoilOffset, reticle.transform.position, cursorEffect);
+        Vector3 targetPos;
+        if (PlayerCharacter.Instance.alive)
+        {
+            targetPos = Vector3.Lerp(focus.transform.position + recoilOffset, reticle.transform.position, cursorEffect);
+        }
+        else
+        {
+            targetPos = focus.transform.position;
+        }
         transform.position = Vector3.SmoothDamp(transform.position, targetPos - Vector3.up * distance, ref velocity, followTightness, maxSpeed);
 
         if(recoilOffset.magnitude > 0.1f)
@@ -38,7 +46,8 @@ public class CameraFollower : MonoBehaviour
 
     public void DoShake(float duration, float power, int vibrato)
     {
-        shakingTransform.transform.DOShakePosition(duration, power, vibrato);
+        if(PlayerCharacter.Instance.alive)
+            shakingTransform.transform.DOShakePosition(duration, power, vibrato);
     }
 
     internal void HandleRecoil(Vector3 direction)

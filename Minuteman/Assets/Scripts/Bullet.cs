@@ -47,14 +47,29 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        HandleImpact();
+        if(collision.gameObject.GetComponent<Redcoat>() != null)
+        {
+            HandleImpact(false);
+            collision.gameObject.GetComponent<Redcoat>().Die();
+        } else if(collision.gameObject.GetComponent<PlayerCharacter>() != null)
+        {
+            HandleImpact(false);
+            collision.gameObject.GetComponent<PlayerCharacter>().Die();
+        }
+        else
+        {
+            HandleImpact(true);
+        }
     }
 
-    private void HandleImpact()
+    private void HandleImpact(bool hitInanimate = true)
     {
-        GameObject spark = GameObject.Instantiate(impactPrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
-        spark.transform.position = this.transform.position;
-        Destroy(spark, 1f);
+        if (hitInanimate)
+        {
+            GameObject spark = GameObject.Instantiate(impactPrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
+            spark.transform.position = this.transform.position;
+            Destroy(spark, 1f);
+        }
 
         if (trailInstantiated != null)
         {
