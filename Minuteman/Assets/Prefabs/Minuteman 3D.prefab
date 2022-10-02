@@ -74,12 +74,12 @@ GameObject:
   - component: {fileID: 3839379418969160056}
   - component: {fileID: 1094060211185303417}
   m_Layer: 8
-  m_Name: 'Gun Arms '
+  m_Name: '(D) Reloading Gun Arms '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5333236359786029457
 Transform:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &471999698401795834
 Transform:
   m_ObjectHideFlags: 0
@@ -538,10 +538,9 @@ MonoBehaviour:
   legsTransform: {fileID: 9217108590059129150}
   legs: {fileID: 6962454060162974756}
   arms: {fileID: 7280493511008074430}
+  reloadingArms: {fileID: 1094060211185303417}
   stillLegs: {fileID: 21300000, guid: a79742974488a5741aa8df2b19d3fe88, type: 3}
   movingLegs: {fileID: 21300000, guid: 1ff30f40ca5933c4ea9a8a1b6566c6d3, type: 3}
-  regularArms: {fileID: 21300000, guid: 2336373305fdb36478150d985756dfb6, type: 3}
-  recoilArms: {fileID: 21300000, guid: c98109e25641b1c4c882398c554ab6ef, type: 3}
 --- !u!1 &8876962617429137664
 GameObject:
   m_ObjectHideFlags: 0

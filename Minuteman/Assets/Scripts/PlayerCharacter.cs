@@ -143,6 +143,10 @@ public class PlayerCharacter : MonoBehaviour
         {
             OnFire.Invoke();
         }
+
+        arms.gameObject.SetActive(false);
+        reloadingArms.gameObject.SetActive(true);
+        reloadingArms.Play("Reload");
     }
 
     private void FixedUpdate()
@@ -240,9 +244,10 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject bodyTransform;
     public GameObject armsTransform, legsTransform;
     public SpriteRenderer legs, arms;
+    public Animator reloadingArms;
     private Vector3 left = new Vector3(-1f, 1f, 1f);
     private Vector3 right = new Vector3(1f, 1f, 1f);
-    public Sprite stillLegs, movingLegs, regularArms, recoilArms;
+    public Sprite stillLegs, movingLegs;
 
     private void UpdateSprite()
     {
@@ -267,8 +272,13 @@ public class PlayerCharacter : MonoBehaviour
         }
         float yPos = legs.sprite == movingLegs ? 0.2f : 0f;
         bodyTransform.transform.localPosition = new Vector3(0f, yPos, 0f);
-        arms.sprite = ReloadTimeNormalized > 0.95f ? recoilArms : regularArms;
 
+        if (CanShoot && reloadingArms.gameObject.activeSelf)
+        {
+            reloadingArms.gameObject.SetActive(false);
+            arms.gameObject.SetActive(true);
+
+        }
         armsTransform.transform.LookAt(Reticle.Instance.transform);
     }
 }
