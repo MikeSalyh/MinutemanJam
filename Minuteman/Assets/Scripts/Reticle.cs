@@ -19,6 +19,13 @@ public class Reticle : MonoBehaviour
     public GameObject loadedGraphics, emptyGraphics;
 
     public bool is2D = true;
+    private CanvasGroup cg;
+
+
+    private void Awake()
+    {
+        cg = GetComponent<CanvasGroup>();
+    }
 
     private void Start()
     {
@@ -30,17 +37,27 @@ public class Reticle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdatePosition();
-        Cursor.visible = false;
-
-        if (_isLoaded)
+        if (PlayerCharacter.Instance.alive)
         {
-            DrawLine();
+            UpdatePosition();
+            Cursor.visible = false;
+
+            if (_isLoaded)
+            {
+                DrawLine();
+            }
+            else
+            {
+                reloadAnimation.fillAmount = 1 - character.ReloadTimeNormalized;
+            }
+            cg.alpha = 1f;
         }
         else
         {
-            reloadAnimation.fillAmount = 1 - character.ReloadTimeNormalized;
+            cg.alpha = 0f;
+            Cursor.visible = true;
         }
+        
     }
 
     private void UpdatePosition()

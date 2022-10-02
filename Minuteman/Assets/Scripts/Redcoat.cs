@@ -82,6 +82,8 @@ public class Redcoat : MonoBehaviour
                 TakeFiringPosition();
             }
         }
+
+        UpdateSprite();
     }
 
     private void HandleDanger()
@@ -122,6 +124,10 @@ public class Redcoat : MonoBehaviour
         CameraFollower.Instance.DoShake(0.5f, 1f, 4);
 
         shootCooldownRemaining = shootCooldown;
+
+        arms.gameObject.SetActive(false);
+        reloadingArms.gameObject.SetActive(true);
+        reloadingArms.Play("Reload");
     }
 
     public void TakeCover()
@@ -182,5 +188,47 @@ public class Redcoat : MonoBehaviour
         GameObject deathpart = GameObject.Instantiate(deathParticles, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         deathpart.transform.position = this.transform.position;
         Destroy(deathpart, 1f);
+    }
+
+    [Header("Sprites")]
+    public GameObject bodyTransform;
+    public GameObject armsTransform, legsTransform;
+    public SpriteRenderer legs, arms;
+    public Animator reloadingArms;
+    private Vector3 left = new Vector3(-1f, 1f, 1f);
+    private Vector3 right = new Vector3(1f, 1f, 1f);
+    public Sprite stillLegs, movingLegs;
+
+    private void UpdateSprite()
+    {
+        bodyTransform.transform.localScale = (PlayerCharacter.Instance.transform.position.x > transform.position.x) ? left : right;
+        {
+            legs.sprite = movingLegs;
+        }
+        
+        if (agent.velocity.magnitude > 0.5f)
+        {
+            Sprite legSprite = Time.time % 0.5f < 0.25f ? movingLegs : stillLegs;
+            if (legs.sprite != legSprite)
+            {
+                //A step was taken; SFX here.
+                legs.sprite = legSprite;
+            }
+            legsTransform.transform.localScale = rb.velocity.x > 0 ? left : right;
+        }
+        else
+        {
+            legs.sprite = stillLegs;
+        }
+        float yPos = legs.sprite == movingLegs ? 0.2f : 0f;
+        bodyTransform.transform.localPosition = new Vector3(0f, yPos, 0f);
+
+        if (IsReadyToShoot && reloadingArms.gameObject.activeSelf)
+        {
+            reloadingArms.gameObject.SetActive(false);
+            arms.gameObject.SetActive(true);
+
+        }
+        armsTransform.transform.LookAt(PlayerCharacter.Instance.transform);
     }
 }
