@@ -46,6 +46,7 @@ public class CameraFollower : MonoBehaviour
 
     public void DoShake(float duration, float power, int vibrato)
     {
+        shakingTransform.transform.localPosition = Vector3.zero;
         if(PlayerCharacter.Instance.alive)
             shakingTransform.transform.DOShakePosition(duration, power, vibrato);
     }

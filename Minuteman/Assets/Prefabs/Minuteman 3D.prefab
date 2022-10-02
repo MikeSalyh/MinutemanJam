@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputForce: 450
-  dodgeCooldown: 0.4
+  dodgeCooldown: 0.3
   dodgeAcceleration: 100
   recoilForce: 5000
   bulletPrefab: {fileID: 8725201645778585510, guid: 7302c5a2be578a14394114e96460d1cf, type: 3}
