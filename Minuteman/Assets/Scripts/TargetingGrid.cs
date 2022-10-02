@@ -9,7 +9,7 @@ public class TargetingGrid : MonoBehaviour
     public GameObject gridPrefab;
     public static TargetingGrid Instance;
     public List<TargetingTile> hotTiles = new List<TargetingTile>();
-    public float maxDistance = 5 * 5;
+    public int tileSize = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class TargetingGrid : MonoBehaviour
             {
                 TargetingTile t = GameObject.Instantiate(gridPrefab, this.transform).GetComponent<TargetingTile>();
                 sightGrid[x, y] = t;
-                t.transform.position = new Vector2(x * 5f, y * 5f);
+                t.transform.position = new Vector2(x * tileSize, y * tileSize);
             }
         }
     }
@@ -37,7 +37,7 @@ public class TargetingGrid : MonoBehaviour
             for (int x = 0; x < gridSize; x++)
             {
                 //Debug.DrawRay(sightGrid[x, y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, Color.blue, 5f);
-                if (Physics.Raycast(sightGrid[x,y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, out h, maxDistance))
+                if (Physics.Raycast(sightGrid[x,y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, out h, tileSize* tileSize))
                 {
                     if(h.collider == player)
                     {
