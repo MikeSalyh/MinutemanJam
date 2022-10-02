@@ -34,14 +34,38 @@ public class PlayerCharacter : MonoBehaviour
     public Musketevent OnFire, OnReloadComplete;
 
     public GameObject smokePrefab;
+    private WaitForSeconds DetectorDelay = new WaitForSeconds(1f);
+
+    private Collider c;
+    private Vector2 lastPosition;
+    private float minimumMoveThresholdToRecalculate = 1f;
 
     // Start is called before the first frame update
     void Awake()
     {
+        c = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb2 = GetComponent<Rigidbody2D>();
         if (rb2 != null) is2D = true;
         bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
+    }
+
+    private void Start()
+    {
+        StartCoroutine(DetectDangerZoneCoroutine());
+    }
+
+    private IEnumerator DetectDangerZoneCoroutine()
+    {
+        while (true)
+        {
+            if(Vector3.Distance(transform.position, lastPosition) > minimumMoveThresholdToRecalculate)
+            {
+                TargetingGrid.Instance.CalculateGrid(c);
+                lastPosition = transform.position;
+            }
+            yield return DetectorDelay;
+        }
     }
 
     // Update is called once per frame
@@ -49,6 +73,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         HandleMovementInput();
         HandleShooting();
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TargetingGrid.Instance.CalculateGrid(c);
+        }
     }
 
     private void HandleShooting()
@@ -73,8 +102,9 @@ public class PlayerCharacter : MonoBehaviour
     private void ShootMusket()
     {
         Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
-        b.transform.position = this.transform.position;
         Vector3 shotDirection = (Reticle.Instance.transform.position - transform.position).normalized;
+
+        b.transform.position = this.transform.position + shotDirection;
         b.Shoot(shotDirection);
 
         if (is2D)
