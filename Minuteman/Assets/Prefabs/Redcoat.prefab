@@ -110,7 +110,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3737411658868393635}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.70710677}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -45.16, y: -6.1099854, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -166,8 +166,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 8
-  m_Acceleration: 8
+  m_Speed: 16
+  m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -190,7 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe2319643732d04d864345973137eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {fileID: 0}
+  currentTile: {fileID: 0}
+  shootCooldownRemaining: 0
+  bulletPrefab: {fileID: 8725201645778585510, guid: 40b4e86a2f9316746a5cdd292d7d7ae8, type: 3}
+  smokePrefab: {fileID: 7397985031446310531, guid: e00e3e89b27afb5418b8d71e5e804449, type: 3}
+  recoilForce: 5000
+  rend: {fileID: 3737411658548999645}
 --- !u!1 &5343101939827105036
 GameObject:
   m_ObjectHideFlags: 0

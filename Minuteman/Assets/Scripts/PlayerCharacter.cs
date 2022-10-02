@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public static PlayerCharacter Instance;
+
     public float inputForce = 9000f;
     public float dodgeCooldown = 1f;
     public float dodgeAcceleration = 100f;
@@ -31,7 +33,7 @@ public class PlayerCharacter : MonoBehaviour
     public float ReloadTimeNormalized => reloadCooldownRemaining / reloadCooldownTime;
 
     public delegate void Musketevent();
-    public Musketevent OnFire, OnReloadComplete;
+    public Musketevent OnFire, OnReloadComplete, OnAssessDanger;
 
     public GameObject smokePrefab;
     private WaitForSeconds DetectorDelay = new WaitForSeconds(1f);
@@ -45,15 +47,16 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Instance = this;
         c = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb2 = GetComponent<Rigidbody2D>();
         if (rb2 != null) is2D = true;
-        bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
 
     private void Start()
     {
+        bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
         StartCoroutine(DetectDangerZoneCoroutine());
     }
 
@@ -66,6 +69,8 @@ public class PlayerCharacter : MonoBehaviour
             {
                 TargetingGrid.Instance.CalculateGrid(c);
                 lastPosition = transform.position;
+                if (OnAssessDanger != null)
+                    OnAssessDanger.Invoke();
             }
             yield return DetectorDelay;
         }

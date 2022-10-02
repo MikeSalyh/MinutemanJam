@@ -17,10 +17,26 @@ public class Redcoat : MonoBehaviour
 
     public bool IsReadyToShoot => shootCooldownRemaining <= 0f;
 
+    public GameObject bulletPrefab;
+    private GameObject bulletParent;
+    public GameObject smokePrefab;
+
+    public float recoilForce = 1000f;
+    private Rigidbody rb;
+    public Renderer rend;
+
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
+    }
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
+        PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
         yield return new WaitForSeconds(3f);
         TakeFiringPosition();
         initialized = true;
@@ -36,7 +52,7 @@ public class Redcoat : MonoBehaviour
 
         if (initialized)
         {
-            if (agent.remainingDistance < 1f && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted)
+            if (agent.remainingDistance < 1f && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible)
             {
                 StartCoroutine(FireAtPlayerCoroutine());
             }
@@ -53,20 +69,41 @@ public class Redcoat : MonoBehaviour
         }
     }
 
+    private void HandleDanger()
+    {
+        if (!IsReadyToShoot)
+        {
+            TakeCover();
+        }
+    }
+
     private IEnumerator FireAtPlayerCoroutine()
     {
         midFiringAtPlayer = true;
         agent.isStopped = true;
         yield return new WaitForSeconds(UnityEngine.Random.value);
         Debug.Log("Firing!");
-        ShootGun();
+        ShootMusket();
         yield return postShotDisorientation;
         midFiringAtPlayer = false;
         TakeCover();
     }
 
-    private void ShootGun()
+
+    private void ShootMusket()
     {
+        Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
+        Vector3 shotDirection = PlayerCharacter.Instance.transform.position - transform.position;
+        shotDirection.y = 0f;
+        shotDirection.Normalize();
+
+        b.transform.position = this.transform.position + shotDirection;
+        b.Shoot(shotDirection);
+
+        rb.AddForce(-shotDirection * recoilForce);
+        //CameraFollower.Instance.HandleRecoil(-shotDirection);
+        //CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
+
         shootCooldownRemaining = shootCooldown;
     }
 
