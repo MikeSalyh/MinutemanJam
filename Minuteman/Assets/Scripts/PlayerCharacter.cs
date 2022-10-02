@@ -46,6 +46,7 @@ public class PlayerCharacter : MonoBehaviour
 
     public bool alive = true;
     public GameObject deathParticles;
+    public AudioClip dashSound;
 
     // Start is called before the first frame update
     void Awake()
@@ -217,6 +218,7 @@ public class PlayerCharacter : MonoBehaviour
                 smoke.transform.position = this.transform.position;
                 smoke.transform.LookAt(transform.position - (Vector3)_dodgeVector, Vector2.up);
                 Destroy(smoke, 1f);
+                AudioManager.Instance.PlayWobblePitch(dashSound, 0.1f);
             }
         }
     }

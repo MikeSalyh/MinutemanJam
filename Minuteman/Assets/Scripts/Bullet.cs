@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
     public GameObject smokePrefab, impactPrefab;
     public GameObject trailPrefab;
     private GameObject trailInstantiated;
+    public AudioClip shootSound;
+    public AudioClip[] impactSounds;
 
 
     private void Awake()
@@ -36,7 +38,7 @@ public class Bullet : MonoBehaviour
         {
             rb.AddForce(direction * blastVelocity);
         }
-
+        AudioManager.Instance.PlayWobblePitch(shootSound, 0.2f);
         Destroy(this.gameObject, 1f); //after 1 second, the bullet self destructs.
     }
 
@@ -69,6 +71,7 @@ public class Bullet : MonoBehaviour
             GameObject spark = GameObject.Instantiate(impactPrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
             spark.transform.position = this.transform.position;
             Destroy(spark, 1f);
+            AudioManager.Instance.PlayWobblePitch(impactSounds, 0.1f);
         }
 
         if (trailInstantiated != null)

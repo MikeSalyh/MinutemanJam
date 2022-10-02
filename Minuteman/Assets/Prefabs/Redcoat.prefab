@@ -591,6 +591,13 @@ MonoBehaviour:
   recoilForce: 5000
   rend: {fileID: 555644080599811998}
   deathParticles: {fileID: 7397985031446310531, guid: bc99156087c250c46ae53f802355ae0f, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 9b0b5f3bda102444fa4446889846a464, type: 3}
+  - {fileID: 8300000, guid: 32b27c75970439e45a6d47b236bfc4de, type: 3}
+  - {fileID: 8300000, guid: 486f1f393ca39a14b8d719a09e2cc266, type: 3}
+  - {fileID: 8300000, guid: c55d4d930a6ba6e42b977f82f4cf5b44, type: 3}
+  - {fileID: 8300000, guid: cbdc1fbecc1cefe40add0b1eb4d1a1c8, type: 3}
+  deathExplosionSound: {fileID: 8300000, guid: 392be1d6b832d5d46aa08e04cbc843c0, type: 3}
   bodyTransform: {fileID: 485406812925822065}
   armsTransform: {fileID: 3138325220026341914}
   legsTransform: {fileID: 4775298055252099993}

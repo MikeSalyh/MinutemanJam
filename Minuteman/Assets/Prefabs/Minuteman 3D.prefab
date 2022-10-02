@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 5333236359786029457}
   - component: {fileID: 3839379418969160056}
   - component: {fileID: 1094060211185303417}
+  - component: {fileID: 3936363433255766050}
   m_Layer: 8
   m_Name: '(D) Reloading Gun Arms '
   m_TagString: Untagged
@@ -164,6 +165,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3936363433255766050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3489630945094166106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe7ffce69afa4d4399f14b1de945191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corkSound: {fileID: 8300000, guid: ab8f4d69b5865e2448853bd9839c9ad1, type: 3}
+  sandSound: {fileID: 8300000, guid: be9d0ebc1fd2441428975ed56a80dff0, type: 3}
+  rustleSound: {fileID: 8300000, guid: addbe4f97d5f7d94e9f976d1438211c6, type: 3}
+  plungerSound: {fileID: 8300000, guid: 5d67f3747b3c4f6408d491d5ca6512bb, type: 3}
+  finishSound: {fileID: 8300000, guid: f7add3568ff5a4446a2666275df82ea9, type: 3}
 --- !u!1 &4580674409347849700
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +582,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   alive: 1
   deathParticles: {fileID: 7397985031446310531, guid: bc99156087c250c46ae53f802355ae0f, type: 3}
+  dashSound: {fileID: 8300000, guid: 227f7706eef5963488d26b9f57026c00, type: 3}
   bodyTransform: {fileID: 7445045885377072187}
   armsTransform: {fileID: 6877500523946372543}
   legsTransform: {fileID: 9217108590059129150}

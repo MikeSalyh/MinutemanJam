@@ -28,6 +28,8 @@ public class Redcoat : MonoBehaviour
     private bool isCommando = false;
 
     public GameObject deathParticles;
+    public AudioClip[] deathSounds;
+    public AudioClip deathExplosionSound;
 
 
     private void Awake()
@@ -188,6 +190,8 @@ public class Redcoat : MonoBehaviour
         GameObject deathpart = GameObject.Instantiate(deathParticles, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         deathpart.transform.position = this.transform.position;
         Destroy(deathpart, 1f);
+        AudioManager.Instance.PlaySound(deathSounds);
+        AudioManager.Instance.PlayWobblePitch(deathExplosionSound, 0.1f);
     }
 
     [Header("Sprites")]
