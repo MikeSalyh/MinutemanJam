@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         gameOn = false;
         inGameGUI.SetActive(false);
         victoryPrompt.SetActive(true);
+        PlayerCharacter.Instance.gameObject.SetActive(false);
         AudioManager.Instance.PlaySound(victorySound);
     }
 

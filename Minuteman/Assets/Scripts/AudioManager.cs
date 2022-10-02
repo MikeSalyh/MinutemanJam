@@ -9,7 +9,10 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+            Instance = this;
+        src1 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        src2 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
     }
 
 
@@ -22,7 +25,8 @@ public class AudioManager : MonoBehaviour
     {
         float wobble = Random.Range(0f, maxValue);
         if (Random.value > 0.5f) wobble *= -1f;
-        src2.pitch = 1 + wobble;
+        if(src2 != null)
+            src2.pitch = 1 + wobble;
         PlaySound(c, src2);
     }
 
