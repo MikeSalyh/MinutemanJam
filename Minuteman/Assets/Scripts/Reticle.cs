@@ -57,6 +57,7 @@ public class Reticle : MonoBehaviour
         {
             cg.alpha = 0f;
             Cursor.visible = true;
+            lineRenderer.gameObject.SetActive(false);
         }
         
     }
