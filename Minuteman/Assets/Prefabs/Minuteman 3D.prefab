@@ -406,7 +406,6 @@ GameObject:
   - component: {fileID: 8789749929691298522}
   - component: {fileID: 8789749929691298518}
   - component: {fileID: 8789749929691298513}
-  - component: {fileID: 1723723065119907105}
   m_Layer: 8
   m_Name: Minuteman 3D
   m_TagString: Untagged
@@ -543,25 +542,6 @@ MonoBehaviour:
   movingLegs: {fileID: 21300000, guid: 1ff30f40ca5933c4ea9a8a1b6566c6d3, type: 3}
   regularArms: {fileID: 21300000, guid: 2336373305fdb36478150d985756dfb6, type: 3}
   recoilArms: {fileID: 21300000, guid: c98109e25641b1c4c882398c554ab6ef, type: 3}
---- !u!95 &1723723065119907105
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8789749929691298523}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ef5bb61d114f8374fa08a383197419a1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8876962617429137664
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +613,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3ee22d6683035184d821ed8a547eb252, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c7994a9a28e9bb24cbb925ac75bedbe7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
