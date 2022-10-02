@@ -11,10 +11,14 @@ public class TargetingGrid : MonoBehaviour
     public List<TargetingTile> hotTiles = new List<TargetingTile>();
     public int tileSize = 5;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
         sightGrid = new TargetingTile[gridSize, gridSize];
         for (int y = 0; y < gridSize; y++)
         {
@@ -22,7 +26,7 @@ public class TargetingGrid : MonoBehaviour
             {
                 TargetingTile t = GameObject.Instantiate(gridPrefab, this.transform).GetComponent<TargetingTile>();
                 sightGrid[x, y] = t;
-                t.transform.position = new Vector2(x * tileSize, y * tileSize);
+                t.transform.localPosition = new Vector3(x * tileSize, y * tileSize);
             }
         }
     }

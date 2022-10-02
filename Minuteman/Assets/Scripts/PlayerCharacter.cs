@@ -57,6 +57,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private IEnumerator DetectDangerZoneCoroutine()
     {
+        yield return DetectorDelay;
         while (true)
         {
             if(Vector3.Distance(transform.position, lastPosition) > minimumMoveThresholdToRecalculate)
