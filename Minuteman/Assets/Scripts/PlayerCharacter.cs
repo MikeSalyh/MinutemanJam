@@ -239,10 +239,10 @@ public class PlayerCharacter : MonoBehaviour
     [Header("Sprites")]
     public GameObject bodyTransform;
     public GameObject armsTransform, legsTransform;
-    public SpriteRenderer legs;
+    public SpriteRenderer legs, arms;
     private Vector3 left = new Vector3(-1f, 1f, 1f);
     private Vector3 right = new Vector3(1f, 1f, 1f);
-    public Sprite stillLegs, movingLegs;
+    public Sprite stillLegs, movingLegs, regularArms, recoilArms;
 
     private void UpdateSprite()
     {
@@ -253,7 +253,12 @@ public class PlayerCharacter : MonoBehaviour
         }
         else if(rb.velocity.magnitude > 0.5f)
         {
-            legs.sprite = Time.time % 0.5f < 0.25f ? movingLegs : stillLegs;
+            Sprite legSprite = Time.time % 0.5f < 0.25f ? movingLegs : stillLegs;
+            if (legs.sprite != legSprite)
+            {
+                //A step was taken; SFX here.
+                legs.sprite = legSprite;
+            }
             legsTransform.transform.localScale = rb.velocity.x > 0 ? left : right;
         }
         else
@@ -262,5 +267,8 @@ public class PlayerCharacter : MonoBehaviour
         }
         float yPos = legs.sprite == movingLegs ? 0.2f : 0f;
         bodyTransform.transform.localPosition = new Vector3(0f, yPos, 0f);
+        arms.sprite = ReloadTimeNormalized > 0.95f ? recoilArms : regularArms;
+
+        armsTransform.transform.LookAt(Reticle.Instance.transform);
     }
 }
