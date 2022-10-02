@@ -54,7 +54,7 @@ public class Redcoat : MonoBehaviour
     private IEnumerator DoDelayedInit()
     {
         yield return new WaitForEndOfFrame();
-        yield return new WaitUntil(() => GameStartManager.Instance.gameOn);
+        yield return new WaitUntil(() => GameManager.Instance.gameOn);
         PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
         yield return new WaitForSeconds(startDelay);
         TakeFiringPosition();
@@ -69,7 +69,7 @@ public class Redcoat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameStartManager.Instance.gameOn) return;
+        if (!GameManager.Instance.gameOn) return;
         if (initialized)
         {
             if (agent.remainingDistance < targetingDistance && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible && PlayerCharacter.Instance.alive)
@@ -93,7 +93,7 @@ public class Redcoat : MonoBehaviour
 
     private void HandleDanger()
     {
-        if (!GameStartManager.Instance.gameOn) return;
+        if (!GameManager.Instance.gameOn) return;
         if (!IsReadyToShoot)
         {
             TakeCover();
@@ -200,6 +200,7 @@ public class Redcoat : MonoBehaviour
             gameObject.SetActive(false);
             AudioManager.Instance.PlaySound(deathSounds);
             AudioManager.Instance.PlayWobblePitch(deathExplosionSound, 0.1f);
+            GameManager.Instance.HandleEnemyDie();
         }
         
     }

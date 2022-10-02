@@ -93,9 +93,8 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameStartManager.Instance.gameOn) return;
-
         HandleMovementInput();
+        if (!GameManager.Instance.gameOn) return;
         HandleShooting();
         UpdateSprite();
     }
@@ -163,6 +162,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         //Move, accelerate + decelerate the character
         _inputVector = new Vector3();
+        if (!GameManager.Instance.gameOn) return;
         if (Time.time < lastDodgeTime + dodgeCooldown)
             return;
 
@@ -242,6 +242,7 @@ public class PlayerCharacter : MonoBehaviour
         deathpart.transform.position = this.transform.position;
         Destroy(deathpart, 1f);
         alive = false;
+        GameManager.Instance.HandlePlayerDie();
     }
 
     [Header("Sprites")]

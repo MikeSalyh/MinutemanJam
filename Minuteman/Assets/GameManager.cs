@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameStartManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public int levelNumber;
-    public static GameStartManager Instance;
+    public static GameManager Instance;
     public bool gameOn = false;
     public GameObject levelStartBox;
     public GameObject inGameGUI;
     public TMP_Text enemyCount, levelCount;
     public int numEnemies;
-    public AudioClip startGameSound;
+    public AudioClip startGameSound, victorySound;
+    public GameObject victoryPrompt, defeatPrompt;
 
     // Start is called before the first frame update
     void Awake()
@@ -45,8 +46,45 @@ public class GameStartManager : MonoBehaviour
     {
         gameOn = true;
         levelStartBox.SetActive(false);
+        victoryPrompt.SetActive(false);
+        defeatPrompt.SetActive(false);
         inGameGUI.SetActive(true);
         AudioManager.Instance.PlaySound(startGameSound);
+    }
+
+    public void HandleEnemyDie()
+    {
+        numEnemies--;
+        enemyCount.text = numEnemies.ToString();
+
+        if(numEnemies <= 0)
+        {
+            //You win!
+            StartCoroutine(VictoryCoroutine());
+        }
+    }
+
+    public void HandlePlayerDie()
+    {
+        StartCoroutine(DefeatCoroutine());
+    }
+
+    private IEnumerator VictoryCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        gameOn = false;
+        inGameGUI.SetActive(false);
+        victoryPrompt.SetActive(true);
+        AudioManager.Instance.PlaySound(victorySound);
+    }
+
+    private IEnumerator DefeatCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        gameOn = false;
+        inGameGUI.SetActive(false);
+        defeatPrompt.SetActive(true);
+        //AudioManager.Instance.PlaySound(victorySound);
     }
 
     public static string NumberToText(int num)

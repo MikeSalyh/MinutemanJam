@@ -12,13 +12,13 @@ public class StartMatchPopup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startButton.onClick.AddListener(GameStartManager.Instance.StartGame);
+        startButton.onClick.AddListener(GameManager.Instance.StartGame);
     }
 
     // Update is called once per frame
     void OnEnable()
     {
-        enemyCount.text = GameStartManager.NumberToText(GameStartManager.Instance.numEnemies) + "  Redcoats";
-        levelCount.text = "Level " + GameStartManager.NumberToText(GameStartManager.Instance.levelNumber);
+        enemyCount.text = GameManager.NumberToText(GameManager.Instance.numEnemies) + "  Redcoat" + (GameManager.Instance.numEnemies == 1 ? "" : "s");
+        levelCount.text = "Level " + GameManager.NumberToText(GameManager.Instance.levelNumber);
     }
 }
