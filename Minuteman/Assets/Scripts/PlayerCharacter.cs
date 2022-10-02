@@ -93,6 +93,8 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameStartManager.Instance.gameOn) return;
+
         HandleMovementInput();
         HandleShooting();
         UpdateSprite();

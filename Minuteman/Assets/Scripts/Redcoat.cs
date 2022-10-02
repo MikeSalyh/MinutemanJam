@@ -31,6 +31,7 @@ public class Redcoat : MonoBehaviour
     public AudioClip[] deathSounds;
     public AudioClip deathExplosionSound;
     public int hp = 1;
+    //public float startDelay = 3f;
 
 
     private void Awake()
@@ -40,12 +41,9 @@ public class Redcoat : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
         bulletParent = GameObject.FindGameObjectWithTag("BulletParent");
-        yield return new WaitForSeconds(3f);
-        TakeFiringPosition();
-        initialized = true;
     }
 
     private void OnEnable()
@@ -56,7 +54,10 @@ public class Redcoat : MonoBehaviour
     private IEnumerator DoDelayedInit()
     {
         yield return new WaitForEndOfFrame();
+        yield return new WaitUntil(() => GameStartManager.Instance.gameOn);
         PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
+        TakeFiringPosition();
+        initialized = true;
     }
 
     private void OnDisable()
@@ -67,7 +68,7 @@ public class Redcoat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!GameStartManager.Instance.gameOn) return;
         if (initialized)
         {
             if (agent.remainingDistance < targetingDistance && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible && PlayerCharacter.Instance.alive)
@@ -91,6 +92,7 @@ public class Redcoat : MonoBehaviour
 
     private void HandleDanger()
     {
+        if (!GameStartManager.Instance.gameOn) return;
         if (!IsReadyToShoot)
         {
             TakeCover();
