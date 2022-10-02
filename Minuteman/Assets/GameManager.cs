@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public AudioClip startGameSound, victorySound;
     public GameObject victoryPrompt, defeatPrompt, pausePrompt;
 
+    private string finalLevelName = "Final Level";
+    private string finalMatch = "and King George";
+    public int finalLevel = 5;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,9 +46,16 @@ public class GameManager : MonoBehaviour
         inGameGUI.SetActive(false);
 
         numEnemies = GameObject.FindObjectsOfType<Redcoat>().Length;
-        //enemyCount.text = NumberToText(numEnemies) + "  Redcoats";
         enemyCount.text = numEnemies.ToString();
-        levelCount.text = "Level " + NumberToText(levelNumber);
+
+        if(levelNumber == finalLevel)
+        {
+            levelCount.text = "Final Level";
+        }
+        else
+        {
+            levelCount.text = "Level " + NumberToText(levelNumber);
+        }
 
         levelStartBox.SetActive(true);
     }

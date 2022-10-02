@@ -28,10 +28,13 @@ public class Redcoat : MonoBehaviour
     private bool isCommando = false;
 
     public GameObject deathParticles;
-    public AudioClip[] deathSounds;
+    public AudioClip[] deathSounds, attackSounds;
     public AudioClip deathExplosionSound;
     public int hp = 1;
     public float startDelay = 3f;
+    public float vocalizationChance = 0.1f;
+    private static float lastVocalizationTime = 0f;
+    private static float vocalizationDelay = 2f;
 
 
     private void Awake()
@@ -107,6 +110,11 @@ public class Redcoat : MonoBehaviour
     {
         midFiringAtPlayer = true;
         agent.isStopped = true;
+        if(Random.value < vocalizationChance && Time.time > lastVocalizationTime + vocalizationDelay)
+        {
+            AudioManager.Instance.PlaySound(attackSounds);
+            lastVocalizationTime = Time.time;
+        }
         yield return new WaitForSeconds(UnityEngine.Random.value + 0.25f);
         ShootMusket();
         yield return postShotDisorientation;
@@ -192,13 +200,13 @@ public class Redcoat : MonoBehaviour
         GameObject deathpart = GameObject.Instantiate(deathParticles, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         deathpart.transform.position = this.transform.position;
         Destroy(deathpart, 1f);
+        AudioManager.Instance.PlaySound(deathSounds);
 
         hp--;
         if(hp <= 0)
         {
             StopAllCoroutines();
             gameObject.SetActive(false);
-            AudioManager.Instance.PlaySound(deathSounds);
             AudioManager.Instance.PlayWobblePitch(deathExplosionSound, 0.1f);
             GameManager.Instance.HandleEnemyDie();
         }

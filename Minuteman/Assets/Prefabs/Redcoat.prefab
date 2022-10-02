@@ -586,6 +586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTile: {fileID: 0}
   shootCooldownRemaining: 0
+  shootCooldown: 10
   bulletPrefab: {fileID: 8725201645778585510, guid: 40b4e86a2f9316746a5cdd292d7d7ae8, type: 3}
   smokePrefab: {fileID: 7397985031446310531, guid: e00e3e89b27afb5418b8d71e5e804449, type: 3}
   recoilForce: 5000
@@ -597,7 +598,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 486f1f393ca39a14b8d719a09e2cc266, type: 3}
   - {fileID: 8300000, guid: c55d4d930a6ba6e42b977f82f4cf5b44, type: 3}
   - {fileID: 8300000, guid: cbdc1fbecc1cefe40add0b1eb4d1a1c8, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: c1ee3c86c9966d14790f1f4a15159e26, type: 3}
+  - {fileID: 8300000, guid: 3b872f053280ab544aa4ac542e1cd180, type: 3}
+  - {fileID: 8300000, guid: e147baadbd876184d84b939fb3f9e42d, type: 3}
+  - {fileID: 8300000, guid: ca7fe649be787684f9c9bdbac89e42d5, type: 3}
+  - {fileID: 8300000, guid: 8d6b1c820b9064e4e8c2cc14f97173c3, type: 3}
   deathExplosionSound: {fileID: 8300000, guid: 392be1d6b832d5d46aa08e04cbc843c0, type: 3}
+  hp: 1
+  startDelay: 3
+  vocalizationChance: 0.25
   bodyTransform: {fileID: 485406812925822065}
   armsTransform: {fileID: 3138325220026341914}
   legsTransform: {fileID: 4775298055252099993}

@@ -18,7 +18,16 @@ public class StartMatchPopup : MonoBehaviour
     // Update is called once per frame
     void OnEnable()
     {
-        enemyCount.text = GameManager.NumberToText(GameManager.Instance.numEnemies) + "  Redcoat" + (GameManager.Instance.numEnemies == 1 ? "" : "s");
-        levelCount.text = "Level " + GameManager.NumberToText(GameManager.Instance.levelNumber);
+
+        if (GameManager.Instance.levelNumber == GameManager.Instance.finalLevel)
+        {
+            levelCount.text = "Final Level";
+            enemyCount.text = "King George";
+        }
+        else
+        {
+            levelCount.text = "Level " + GameManager.NumberToText(GameManager.Instance.levelNumber);
+            enemyCount.text = GameManager.NumberToText(GameManager.Instance.numEnemies) + "  Redcoat" + (GameManager.Instance.numEnemies == 1 ? "" : "s");
+        }
     }
 }
