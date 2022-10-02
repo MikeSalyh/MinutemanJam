@@ -58,6 +58,7 @@ public class PauseMenu : MonoBehaviour
     private void Surrender()
     {
         GameManager.Instance.SetPaused(false);
+        Cursor.visible = true;
         MetagameManager.Instance.QuitToMainMenu();
     }
 }
