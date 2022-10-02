@@ -7,18 +7,34 @@ public class GameManager : MonoBehaviour
 {
     public int levelNumber;
     public static GameManager Instance;
-    public bool gameOn = false;
+    public bool gameOn = false, gamePaused = false;
     public GameObject levelStartBox;
     public GameObject inGameGUI;
     public TMP_Text enemyCount, levelCount;
     public int numEnemies;
     public AudioClip startGameSound, victorySound;
-    public GameObject victoryPrompt, defeatPrompt;
+    public GameObject victoryPrompt, defeatPrompt, pausePrompt;
 
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
+    }
+
+    public void SetPaused(bool value)
+    {
+        if (value)
+        {
+            Time.timeScale = 0f;
+            gamePaused = true;
+            pausePrompt.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            gamePaused = false;
+            pausePrompt.SetActive(false);
+        }
     }
 
     private void Start()
@@ -36,9 +52,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Escape) && gameOn)
         {
-            StartGame();
+            SetPaused(true);
         }
     }
 

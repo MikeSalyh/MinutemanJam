@@ -6,6 +6,22 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource src1, src2;
     public static AudioManager Instance;
+    public AudioSource musicSource;
+
+    private bool _musicMuted;
+    public bool MusicMuted {
+        get
+        {
+            return _musicMuted;
+        }
+        set
+        {
+            _musicMuted = value;
+            musicSource.volume = value ? 0f : 1f;
+        }
+    }
+    
+    public bool soundMuted;
 
     private void Awake()
     {
@@ -38,6 +54,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioClip c, AudioSource s = null)
     {
+        if (soundMuted) return;
         if (s == null) s = src1;
         if(c != null)
         {

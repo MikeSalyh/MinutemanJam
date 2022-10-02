@@ -43,4 +43,9 @@ public class MetagameManager : MonoBehaviour
     {
         LoadLevel(currentLevel);
     }
+
+    public void QuitToMainMenu()
+    {
+
+    }
 }

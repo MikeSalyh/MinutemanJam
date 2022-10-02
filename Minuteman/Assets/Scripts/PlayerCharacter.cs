@@ -101,6 +101,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void HandleShooting()
     {
+        if (GameManager.Instance.gamePaused) return;
         if(reloadCooldownRemaining > 0f)
         {
             reloadCooldownRemaining -= Time.deltaTime;
@@ -162,7 +163,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         //Move, accelerate + decelerate the character
         _inputVector = new Vector3();
-        if (!GameManager.Instance.gameOn) return;
+        if (!GameManager.Instance.gameOn || GameManager.Instance.gamePaused) return;
         if (Time.time < lastDodgeTime + dodgeCooldown)
             return;
 

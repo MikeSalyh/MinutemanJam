@@ -38,7 +38,7 @@ public class Reticle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerCharacter.Instance.alive && GameManager.Instance.gameOn)
+        if (PlayerCharacter.Instance.alive && GameManager.Instance.gameOn && !GameManager.Instance.gamePaused)
         {
             UpdatePosition();
             Cursor.visible = false;
