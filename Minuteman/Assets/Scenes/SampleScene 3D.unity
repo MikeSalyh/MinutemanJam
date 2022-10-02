@@ -872,10 +872,10 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 0.09803922}
+      key1: {r: 1, g: 1, b: 1, a: 0.49019608}
       key2: {r: 1, g: 1, b: 1, a: 0.38039216}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0.38039216}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
@@ -888,17 +888,17 @@ LineRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
-      atime1: 57440
+      atime0: 193
+      atime1: 65535
       atime2: 65535
-      atime3: 0
+      atime3: 65535
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -1030,7 +1030,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1609880500}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &541937732 stripped
 Transform:
@@ -1076,7 +1076,7 @@ Transform:
   m_Children:
   - {fileID: 459217714}
   m_Father: {fileID: 1609880500}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &697568360
 PrefabInstance:
@@ -1845,7 +1845,7 @@ Transform:
   - {fileID: 2137409987}
   - {fileID: 849122651}
   m_Father: {fileID: 1609880500}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1034830618
 GameObject:
@@ -1971,7 +1971,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1609880500}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1216734566 stripped
 GameObject:
@@ -2620,11 +2620,11 @@ Transform:
   m_LocalPosition: {x: 61.399994, y: -334.81253, z: -306.31235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 647844335}
   - {fileID: 966170394}
   - {fileID: 495794888}
   - {fileID: 1144225759}
   - {fileID: 1216734571}
-  - {fileID: 647844335}
   - {fileID: 1345324152}
   - {fileID: 8789749929010913757}
   - {fileID: 418295254}
@@ -3529,7 +3529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 239859617347708874, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239859617347708874, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3604,17 +3604,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239859617347708877, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
-      propertyPath: is2D
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: rifleTip
+      value: 
+      objectReference: {fileID: 8789749930622607294}
     - target: {fileID: 239859617347708877, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
       propertyPath: character
       value: 
       objectReference: {fileID: 1216734572}
-    - target: {fileID: 239859617347708877, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 239859617347708877, guid: a24671f1be7abcb4ebbea0f4b08a4e2e, type: 3}
       propertyPath: cameraTarget
       value: 
@@ -3793,7 +3789,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8789749929691298519, guid: bb69f2c3a97e0784e9b25a7541951c74, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8789749929691298519, guid: bb69f2c3a97e0784e9b25a7541951c74, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3841,3 +3837,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb69f2c3a97e0784e9b25a7541951c74, type: 3}
+--- !u!1 &8789749930622607294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5724605592817169823, guid: bb69f2c3a97e0784e9b25a7541951c74, type: 3}
+  m_PrefabInstance: {fileID: 8789749930622607293}
+  m_PrefabAsset: {fileID: 0}

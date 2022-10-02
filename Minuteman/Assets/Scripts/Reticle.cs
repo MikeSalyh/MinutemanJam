@@ -19,6 +19,7 @@ public class Reticle : MonoBehaviour
     public GameObject loadedGraphics, emptyGraphics;
 
     public bool is2D = true;
+    public GameObject rifleTip;
     private CanvasGroup cg;
 
 
@@ -75,8 +76,8 @@ public class Reticle : MonoBehaviour
     private void DrawLine()
     {
         List<Vector3> pos = new List<Vector3>();
-        pos.Add(new Vector3(character.transform.position.x, character.transform.position.y, 0));
-        pos.Add(new Vector3(transform.position.x, transform.position.y, 0));
+        pos.Add(new Vector3(rifleTip.transform.position.x, 0f, rifleTip.transform.position.z));
+        pos.Add(new Vector3(transform.position.x, 0f, transform.position.z));
         lineRenderer.SetPositions(pos.ToArray());
         lineRenderer.useWorldSpace = true;
     }

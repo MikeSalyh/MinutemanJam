@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 239859617347708874}
   - component: {fileID: 239859617347708876}
   - component: {fileID: 239859617347708877}
+  - component: {fileID: 268646067}
   m_Layer: 5
   m_Name: Reticle
   m_TagString: Untagged
@@ -216,6 +217,19 @@ MonoBehaviour:
   reloadAnimation: {fileID: 239859618908914120}
   loadedGraphics: {fileID: 239859617113495636}
   emptyGraphics: {fileID: 239859618869411967}
+  is2D: 0
+--- !u!225 &268646067
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239859617347708873}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &239859618869411967
 GameObject:
   m_ObjectHideFlags: 0
