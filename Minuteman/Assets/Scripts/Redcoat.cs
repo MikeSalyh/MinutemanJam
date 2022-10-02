@@ -6,14 +6,21 @@ using UnityEngine.AI;
 public class Redcoat : MonoBehaviour
 {
     public bool onTheAttack = false;
-    private bool lookingForFiringPosition = false;
 
     public TargetingTile currentTile;
     private NavMeshAgent agent;
+    public WaitForSeconds postShotDisorientation = new WaitForSeconds(1f);
+
+    private bool initialized = false;
+    private bool midFiringAtPlayer = false;
+
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        yield return new WaitForSeconds(1f);
+        CalculateTarget();
+        initialized = true;
     }
 
     // Update is called once per frame
@@ -21,18 +28,45 @@ public class Redcoat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            onTheAttack = true;
             CalculateTarget();
         }
+
+        if (initialized)
+        {
+            if (agent.remainingDistance < 1f && onTheAttack && !midFiringAtPlayer && currentTile.isTargeted)
+            {
+                StartCoroutine(FireAtPlayerCoroutine());
+            }
+        }
     }
+
+    private IEnumerator FireAtPlayerCoroutine()
+    {
+        midFiringAtPlayer = true;
+        agent.isStopped = true;
+        yield return new WaitForSeconds(UnityEngine.Random.value);
+        Debug.Log("Firing!");
+        ShootGun();
+        yield return postShotDisorientation;
+        onTheAttack = false;
+        midFiringAtPlayer = false;
+        CalculateTarget();
+    }
+
+    private void ShootGun()
+    {
+
+    }
+
 
     public void CalculateTarget()
     {
         TargetingTile newTargetTile = currentTile;
-        Debug.Log("Calculating targeet");
+        Debug.Log("Calculating target");
         //Look for the nearest safety!
         if (onTheAttack)
         {
-            lookingForFiringPosition = true;
             TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, false);
             if (output != null)
                 newTargetTile = output;
@@ -45,6 +79,7 @@ public class Redcoat : MonoBehaviour
         }
 
         agent.SetDestination(newTargetTile.transform.position);
+        agent.isStopped = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,7 +87,7 @@ public class Redcoat : MonoBehaviour
         if (other.tag == "Tile")
         {
             currentTile = other.GetComponent<TargetingTile>();
-            if (lookingForFiringPosition && currentTile.isTargeted && onTheAttack) {
+            if (currentTile.isTargeted && onTheAttack) {
                 agent.SetDestination(currentTile.transform.position);
                 //If the agent gets a shot, it's good!
             }

@@ -51,7 +51,7 @@ public class TargetingGrid : MonoBehaviour
             for (int x = 0; x < gridSize; x++)
             {
                 //Debug.DrawRay(sightGrid[x, y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, Color.blue, 5f);
-                if (Physics.Raycast(sightGrid[x,y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, out h, 100f, walkingLayerMask))
+                if (Physics.Raycast(sightGrid[x,y].transform.position, (player.gameObject.transform.position - sightGrid[x, y].transform.position).normalized, out h, 50f, walkingLayerMask))
                 {
                     if(h.collider == player)
                     {
