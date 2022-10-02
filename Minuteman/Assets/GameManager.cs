@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         defeatPrompt.SetActive(false);
         inGameGUI.SetActive(true);
         AudioManager.Instance.PlaySound(startGameSound);
+        MetagameManager.Instance.currentLevel = levelNumber;
     }
 
     public void HandleEnemyDie()

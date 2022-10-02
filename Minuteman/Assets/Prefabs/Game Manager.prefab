@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 1
   gameOn: 0
+  gamePaused: 0
   levelStartBox: {fileID: 0}
   inGameGUI: {fileID: 0}
   enemyCount: {fileID: 0}
@@ -54,3 +55,4 @@ MonoBehaviour:
   victorySound: {fileID: 8300000, guid: 2c9ef091a3a0c6e459a502289caf061d, type: 3}
   victoryPrompt: {fileID: 0}
   defeatPrompt: {fileID: 0}
+  pausePrompt: {fileID: 0}

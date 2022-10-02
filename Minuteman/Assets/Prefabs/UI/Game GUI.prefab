@@ -91,6 +91,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   QuitButton: {fileID: 3766475238392697863}
   ResumeButton: {fileID: 1812076902449435309}
+  MuteMusicButton: {fileID: 1315574259142443421}
+  MuteSoundButton: {fileID: 8854550094285536222}
+  soundSprite: {fileID: 3539863977236585746}
+  musicSprite: {fileID: 62820155835376886}
+  musicOn: {fileID: 21300000, guid: bfe059fc745bf184198b5c17a0b53eba, type: 3}
+  musicOff: {fileID: 21300000, guid: 1a2c059c1f660ce428efcbad87f98a9d, type: 3}
+  soundOn: {fileID: 21300000, guid: dca6870d7c6a21e4f9946f27d044e291, type: 3}
+  soundOff: {fileID: 21300000, guid: 2802370e1437b544f925ad21007a4314, type: 3}
 --- !u!1 &2762908279651183137
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +995,6 @@ GameObject:
   - component: {fileID: 5314822656763577108}
   - component: {fileID: 5314822656763577109}
   - component: {fileID: 2191240344595017930}
-  - component: {fileID: 302518414}
   m_Layer: 5
   m_Name: (D) Level Lose Box
   m_TagString: Untagged
@@ -1066,20 +1073,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 3177637574356496747}
-  isVictory: 0
---- !u!114 &302518414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314822656763577096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48116514cad330f45b42202c40b5f8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  continueButton: {fileID: 0}
   isVictory: 0
 --- !u!1 &5314822656881765339
 GameObject:
@@ -2321,11 +2314,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e7563c7304213b46982c0f8ccb94282, type: 3}
---- !u!224 &2762908280430005186 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7339521064476106098, guid: 2e7563c7304213b46982c0f8ccb94282, type: 3}
-  m_PrefabInstance: {fileID: 4867518136764356272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2762908280430005189 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7339521064476106101, guid: 2e7563c7304213b46982c0f8ccb94282, type: 3}
@@ -2337,6 +2325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2762908280430005186 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7339521064476106098, guid: 2e7563c7304213b46982c0f8ccb94282, type: 3}
+  m_PrefabInstance: {fileID: 4867518136764356272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5314822657255648286
 PrefabInstance:
   m_ObjectHideFlags: 0
