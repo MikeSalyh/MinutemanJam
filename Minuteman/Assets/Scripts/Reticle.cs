@@ -50,7 +50,8 @@ public class Reticle : MonoBehaviour
         transform.position = Input.mousePosition + cameraTarget.transform.position + center;
         } else
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Camera.main.gameObject.transform.position.z * Vector3.forward);
+            Vector3 reticlePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Camera.main.gameObject.transform.position.z * Vector3.up);
+            transform.position = reticlePos;
         }
     }
 

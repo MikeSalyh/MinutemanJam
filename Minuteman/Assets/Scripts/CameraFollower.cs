@@ -27,7 +27,7 @@ public class CameraFollower : MonoBehaviour
     void LateUpdate()
     {
         Vector3 targetPos = Vector3.Lerp(focus.transform.position + recoilOffset, reticle.transform.position, cursorEffect);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos - Vector3.forward * distance, ref velocity, followTightness, maxSpeed);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos - Vector3.up * distance, ref velocity, followTightness, maxSpeed);
 
         if(recoilOffset.magnitude > 0.1f)
         {

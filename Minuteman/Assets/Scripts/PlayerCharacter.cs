@@ -9,8 +9,8 @@ public class PlayerCharacter : MonoBehaviour
     public float dodgeAcceleration = 100f;
 
     private float lastDodgeTime = 0f;
-    private Vector2 _inputVector = new Vector2();
-    private Vector2 _dodgeVector = new Vector2();
+    private Vector3 _inputVector = new Vector2();
+    private Vector3 _dodgeVector = new Vector2();
     private Rigidbody rb;
     private Rigidbody2D rb2;
     private bool is2D = false;
@@ -73,11 +73,6 @@ public class PlayerCharacter : MonoBehaviour
     {
         HandleMovementInput();
         HandleShooting();
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            TargetingGrid.Instance.CalculateGrid(c);
-        }
     }
 
     private void HandleShooting()
@@ -102,7 +97,9 @@ public class PlayerCharacter : MonoBehaviour
     private void ShootMusket()
     {
         Bullet b = GameObject.Instantiate(bulletPrefab, bulletParent.transform).GetComponent<Bullet>();
-        Vector3 shotDirection = (Reticle.Instance.transform.position - transform.position).normalized;
+        Vector3 shotDirection = Reticle.Instance.transform.position - transform.position;
+        shotDirection.y = 0f;
+        shotDirection.Normalize();
 
         b.transform.position = this.transform.position + shotDirection;
         b.Shoot(shotDirection);
@@ -136,27 +133,27 @@ public class PlayerCharacter : MonoBehaviour
     private void HandleMovementInput()
     {
         //Move, accelerate + decelerate the character
-        _inputVector = new Vector2();
+        _inputVector = new Vector3();
         if (Time.time < lastDodgeTime + dodgeCooldown)
             return;
 
         if (Input.GetKey(KeyCode.W))
         {
-            _inputVector += Vector2.up * inputForce;
+            _inputVector += Vector3.back * inputForce;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            _inputVector += Vector2.down * inputForce;
+            _inputVector += Vector3.forward * inputForce;
         }
 
 
         if (Input.GetKey(KeyCode.A))
         {
-            _inputVector += Vector2.left * inputForce;
+            _inputVector += Vector3.left * inputForce;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            _inputVector += Vector2.right * inputForce;
+            _inputVector += Vector3.right * inputForce;
         }
         _inputVector.Normalize();
 

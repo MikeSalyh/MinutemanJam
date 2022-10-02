@@ -21,12 +21,12 @@ public class Bullet : MonoBehaviour
         is2D = rb2 != null;
     }
 
-    public void Shoot(Vector2 direction)
+    public void Shoot(Vector3 direction)
     {
         trailInstantiated = GameObject.Instantiate(trailPrefab, this.transform);
         GameObject smoke = GameObject.Instantiate(smokePrefab, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         smoke.transform.position = this.transform.position;
-        smoke.transform.LookAt(transform.position + (Vector3)direction, Vector2.up);
+        smoke.transform.LookAt(transform.position + (Vector3)direction, Vector3.forward);
         Destroy(smoke, 1f);
 
         if (is2D)
