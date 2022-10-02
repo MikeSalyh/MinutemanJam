@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MetagameManager : MonoBehaviour
 {
     public static MetagameManager Instance;
+    public int maxLevels = 5;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +37,11 @@ public class MetagameManager : MonoBehaviour
 
     public void DoNextLevel()
     {
-        ReloadLevel();
+        currentLevel++;
+        if (currentLevel < maxLevels)
+            LoadLevel(currentLevel);
+        else
+            QuitToMainMenu();
     }
 
     public void ReloadLevel()

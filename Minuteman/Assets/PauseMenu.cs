@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         ResumeButton.onClick.AddListener(Resume);
-        QuitButton.onClick.AddListener(MetagameManager.Instance.QuitToMainMenu);
+        QuitButton.onClick.AddListener(Surrender);
         MuteMusicButton.onClick.AddListener(ToggleMusic);
         MuteSoundButton.onClick.AddListener(ToggleSound);
     }
@@ -53,5 +53,11 @@ public class PauseMenu : MonoBehaviour
     private void Resume()
     {
         GameManager.Instance.SetPaused(false);
+    }
+
+    private void Surrender()
+    {
+        GameManager.Instance.SetPaused(false);
+        MetagameManager.Instance.QuitToMainMenu();
     }
 }

@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=yellow>Your mission:</color> \nDefeat the redcoats. Clear all 8
+  m_text: "<color=yellow>Your mission:</color> \nDefeat the redcoats. Clear all 5
     levels to win the revolution.\n\n<color=yellow>Be warned:</color> \none musket
     ball is fatal!"
   m_isRightToLeft: 0
