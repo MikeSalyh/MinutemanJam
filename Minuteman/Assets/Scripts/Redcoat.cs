@@ -31,7 +31,7 @@ public class Redcoat : MonoBehaviour
     public AudioClip[] deathSounds;
     public AudioClip deathExplosionSound;
     public int hp = 1;
-    //public float startDelay = 3f;
+    public float startDelay = 3f;
 
 
     private void Awake()
@@ -56,6 +56,7 @@ public class Redcoat : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitUntil(() => GameStartManager.Instance.gameOn);
         PlayerCharacter.Instance.OnAssessDanger += HandleDanger;
+        yield return new WaitForSeconds(startDelay);
         TakeFiringPosition();
         initialized = true;
     }
