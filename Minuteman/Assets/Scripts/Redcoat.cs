@@ -24,6 +24,8 @@ public class Redcoat : MonoBehaviour
     public float recoilForce = 1000f;
     private Rigidbody rb;
     public Renderer rend;
+    private float targetingDistance = 1f;
+    private bool isCommando = false;
 
 
     private void Awake()
@@ -45,14 +47,10 @@ public class Redcoat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TakeFiringPosition();
-        }
 
         if (initialized)
         {
-            if (agent.remainingDistance < 1f && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible)
+            if (agent.remainingDistance < targetingDistance && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted && rend.isVisible)
             {
                 StartCoroutine(FireAtPlayerCoroutine());
             }
@@ -61,7 +59,7 @@ public class Redcoat : MonoBehaviour
         if(shootCooldownRemaining > 0f)
         {
             shootCooldownRemaining -= Time.deltaTime;
-            if(shootCooldownRemaining <= 0f)
+            if (shootCooldownRemaining <= 0f)
             {
                 //Reloading is complete!
                 TakeFiringPosition();
@@ -74,6 +72,9 @@ public class Redcoat : MonoBehaviour
         if (!IsReadyToShoot)
         {
             TakeCover();
+        } else if(isCommando)
+        {
+            TakeCommandoFiringPosition();
         }
     }
 
@@ -81,7 +82,7 @@ public class Redcoat : MonoBehaviour
     {
         midFiringAtPlayer = true;
         agent.isStopped = true;
-        yield return new WaitForSeconds(UnityEngine.Random.value);
+        yield return new WaitForSeconds(UnityEngine.Random.value + 0.25f);
         Debug.Log("Firing!");
         ShootMusket();
         yield return postShotDisorientation;
@@ -102,7 +103,7 @@ public class Redcoat : MonoBehaviour
 
         rb.AddForce(-shotDirection * recoilForce);
         //CameraFollower.Instance.HandleRecoil(-shotDirection);
-        //CameraFollower.Instance.DoShake(recoilShakeDuration, recoilShakePower, recoilShakeVibrato);
+        CameraFollower.Instance.DoShake(0.5f, 1f, 4);
 
         shootCooldownRemaining = shootCooldown;
     }
@@ -118,11 +119,32 @@ public class Redcoat : MonoBehaviour
 
     public void TakeFiringPosition()
     {
+        if(Random.value > 0.25f)
+        {
+            TakeCommandoFiringPosition();
+        } else
+        {
+            TakeSafeFiringPosition();
+        }
+    }
+
+    public void TakeSafeFiringPosition()
+    {
         TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, false);
         if (output != null)
             agent.SetDestination(output.transform.position);
 
         agent.isStopped = false;
+        targetingDistance = 1f;
+        isCommando = false;
+    }
+
+    public void TakeCommandoFiringPosition()
+    {
+        targetingDistance = 3f;
+        agent.SetDestination(PlayerCharacter.Instance.transform.position);
+        agent.isStopped = false;
+        isCommando = true;
     }
 
     private void OnTriggerEnter(Collider other)

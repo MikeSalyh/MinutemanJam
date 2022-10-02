@@ -23,6 +23,6 @@ public class TargetingTile : MonoBehaviour
     public void SetTargeted(bool value)
     {
         isTargeted = value;
-        debugText.text = isTargeted ? "!" : "";
+        //debugText.text = isTargeted ? "!" : "";
     }
 }
