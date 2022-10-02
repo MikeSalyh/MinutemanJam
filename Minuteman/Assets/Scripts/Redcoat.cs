@@ -13,7 +13,7 @@ public class Redcoat : MonoBehaviour
     private bool midFiringAtPlayer = false;
 
     public float shootCooldownRemaining = 0f;
-    private float shootCooldown = 10f;
+    public float shootCooldown = 10f;
 
     public bool IsReadyToShoot => shootCooldownRemaining <= 0f;
 
@@ -30,6 +30,7 @@ public class Redcoat : MonoBehaviour
     public GameObject deathParticles;
     public AudioClip[] deathSounds;
     public AudioClip deathExplosionSound;
+    public int hp = 1;
 
 
     private void Awake()
@@ -183,15 +184,21 @@ public class Redcoat : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void GetHit()
     {
-        StopAllCoroutines();
-        gameObject.SetActive(false);
         GameObject deathpart = GameObject.Instantiate(deathParticles, GameObject.FindGameObjectWithTag("ParticleParent").transform);
         deathpart.transform.position = this.transform.position;
         Destroy(deathpart, 1f);
-        AudioManager.Instance.PlaySound(deathSounds);
-        AudioManager.Instance.PlayWobblePitch(deathExplosionSound, 0.1f);
+
+        hp--;
+        if(hp <= 0)
+        {
+            StopAllCoroutines();
+            gameObject.SetActive(false);
+            AudioManager.Instance.PlaySound(deathSounds);
+            AudioManager.Instance.PlayWobblePitch(deathExplosionSound, 0.1f);
+        }
+        
     }
 
     [Header("Sprites")]

@@ -52,7 +52,7 @@ public class Bullet : MonoBehaviour
         if(collision.gameObject.GetComponent<Redcoat>() != null)
         {
             HandleImpact(false);
-            collision.gameObject.GetComponent<Redcoat>().Die();
+            collision.gameObject.GetComponent<Redcoat>().GetHit();
         } else if(collision.gameObject.GetComponent<PlayerCharacter>() != null)
         {
             HandleImpact(false);
