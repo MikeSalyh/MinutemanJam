@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class Redcoat : MonoBehaviour
 {
-    public bool onTheAttack = false;
-
     public TargetingTile currentTile;
     private NavMeshAgent agent;
     public WaitForSeconds postShotDisorientation = new WaitForSeconds(1f);
@@ -14,12 +12,17 @@ public class Redcoat : MonoBehaviour
     private bool initialized = false;
     private bool midFiringAtPlayer = false;
 
+    public float shootCooldownRemaining = 0f;
+    private float shootCooldown = 10f;
+
+    public bool IsReadyToShoot => shootCooldownRemaining <= 0f;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        yield return new WaitForSeconds(1f);
-        CalculateTarget();
+        yield return new WaitForSeconds(3f);
+        TakeFiringPosition();
         initialized = true;
     }
 
@@ -28,15 +31,24 @@ public class Redcoat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            onTheAttack = true;
-            CalculateTarget();
+            TakeFiringPosition();
         }
 
         if (initialized)
         {
-            if (agent.remainingDistance < 1f && onTheAttack && !midFiringAtPlayer && currentTile.isTargeted)
+            if (agent.remainingDistance < 1f && IsReadyToShoot && !midFiringAtPlayer && currentTile.isTargeted)
             {
                 StartCoroutine(FireAtPlayerCoroutine());
+            }
+        }
+
+        if(shootCooldownRemaining > 0f)
+        {
+            shootCooldownRemaining -= Time.deltaTime;
+            if(shootCooldownRemaining <= 0f)
+            {
+                //Reloading is complete!
+                TakeFiringPosition();
             }
         }
     }
@@ -49,36 +61,30 @@ public class Redcoat : MonoBehaviour
         Debug.Log("Firing!");
         ShootGun();
         yield return postShotDisorientation;
-        onTheAttack = false;
         midFiringAtPlayer = false;
-        CalculateTarget();
+        TakeCover();
     }
 
     private void ShootGun()
     {
-
+        shootCooldownRemaining = shootCooldown;
     }
 
-
-    public void CalculateTarget()
+    public void TakeCover()
     {
-        TargetingTile newTargetTile = currentTile;
-        Debug.Log("Calculating target");
-        //Look for the nearest safety!
-        if (onTheAttack)
-        {
-            TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, false);
-            if (output != null)
-                newTargetTile = output;
-        } 
-        else
-        {
-            TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, true);
-            if (output != null)
-                newTargetTile = output;
-        }
+        TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, true);
+        if (output != null)
+            agent.SetDestination(output.transform.position);
 
-        agent.SetDestination(newTargetTile.transform.position);
+        agent.isStopped = false;
+    }
+
+    public void TakeFiringPosition()
+    {
+        TargetingTile output = TargetingGrid.Instance.FindNearestTile(currentTile, false);
+        if (output != null)
+            agent.SetDestination(output.transform.position);
+
         agent.isStopped = false;
     }
 
@@ -87,7 +93,7 @@ public class Redcoat : MonoBehaviour
         if (other.tag == "Tile")
         {
             currentTile = other.GetComponent<TargetingTile>();
-            if (currentTile.isTargeted && onTheAttack) {
+            if (currentTile.isTargeted && IsReadyToShoot) {
                 agent.SetDestination(currentTile.transform.position);
                 //If the agent gets a shot, it's good!
             }
