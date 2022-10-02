@@ -46,6 +46,11 @@ public class MetagameManager : MonoBehaviour
 
     public void QuitToMainMenu()
     {
+        SceneManager.LoadScene("MainMenu");
+    }
 
+    public void NewGame()
+    {
+        LoadLevel(1);
     }
 }
