@@ -38,7 +38,6 @@ public class CameraFollower : MonoBehaviour
 
     public void DoShake(float duration, float power, int vibrato)
     {
-        Debug.Log("Shaking!");
         shakingTransform.transform.DOShakePosition(duration, power, vibrato);
     }
 

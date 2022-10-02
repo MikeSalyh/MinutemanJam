@@ -5,6 +5,7 @@ using TMPro;
 
 public class TargetingTile : MonoBehaviour
 {
+    public int x, y;
     public bool isTargeted = false;
     public TMP_Text debugText;
 
@@ -22,6 +23,6 @@ public class TargetingTile : MonoBehaviour
     public void SetTargeted(bool value)
     {
         isTargeted = value;
-        debugText.text = isTargeted ? "HOT!" : "";
+        debugText.text = isTargeted ? "!" : "";
     }
 }

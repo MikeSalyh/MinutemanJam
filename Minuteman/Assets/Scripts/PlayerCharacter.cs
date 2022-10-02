@@ -40,6 +40,8 @@ public class PlayerCharacter : MonoBehaviour
     private Vector2 lastPosition;
     private float minimumMoveThresholdToRecalculate = 1f;
 
+    public TargetingTile currentTile;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -193,6 +195,14 @@ public class PlayerCharacter : MonoBehaviour
                 smoke.transform.LookAt(transform.position - (Vector3)_dodgeVector, Vector2.up);
                 Destroy(smoke, 1f);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Tile")
+        {
+            currentTile = other.GetComponent<TargetingTile>();
         }
     }
 }

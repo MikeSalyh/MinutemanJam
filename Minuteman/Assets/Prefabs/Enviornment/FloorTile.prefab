@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 869587342334144440}
   - component: {fileID: 869587342334144447}
   - component: {fileID: 3139427524238952123}
-  m_Layer: 0
+  - component: {fileID: 8396813051396354424}
+  m_Layer: 11
   m_Name: FloorTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,8 +97,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e512ab6e4370d440b6ba541f8c3e3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 0
   isTargeted: 0
   debugText: {fileID: 7559161036527937920}
+--- !u!65 &8396813051396354424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869587342334144441}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8925262856033700305
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +125,7 @@ GameObject:
   - component: {fileID: 5156394611195155936}
   - component: {fileID: 6844526097726046263}
   - component: {fileID: 7559161036527937920}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Debug label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
